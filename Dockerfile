@@ -3,13 +3,18 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install dependencies first (better caching)
+# Install system dependencies required by rasterio/GDAL
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libexpat1 \
+    libgdal-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
-COPY *.py .
-COPY requirements.txt .
+COPY *.py ./
 
 # Create data directory and copy GeoTIFF
 # Note: The GeoTIFF should be copied to python_backend/data/ before building
