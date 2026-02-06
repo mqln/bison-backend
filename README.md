@@ -7,7 +7,7 @@ High-performance Python backend for Alaska bison population dynamics simulation.
 - FastAPI REST API
 - NumPy/SciPy vectorized grid operations (~165ms per step on 1966×1966 grid)
 - FFT-based migration using scipy.signal.fftconvolve
-- Realistic population dynamics calibrated to Yellowstone data (5-7% annual growth)
+- Realistic population dynamics calibrated to Yukon reintroduction (up to 20%/year) and Yellowstone data (5-7% at capacity)
 - Adaptive release area based on local habitat quality
 
 ## Setup
@@ -52,10 +52,12 @@ Key parameters in `config.py`:
 
 | Parameter | Value | Description |
 |-----------|-------|-------------|
-| `max_growth_rate` | 10% | Calibrated to Yellowstone λ=1.07-1.08 |
+| `max_growth_rate` | 20% | Matches Yukon reintroduction data; settles to 5-7% near capacity |
 | `starvation_threshold` | 20% | Food satisfaction below which population declines |
 | `utilization_factor` | 50% | Fraction of digestible biomass harvestable |
-| `diffusion_rate` | 15% | Annual population spread rate |
+| `annual_migration_km` | 200 km | Seasonal migration distance (bison cover 100-300km) |
+| `diffusion_rate` | 35% | Annual frontier population spread rate |
+| `kernel_decay` | d⁻¹·⁵ | Distance-weighted spread: herd cohesion + frontier expansion |
 
 ## Data
 
