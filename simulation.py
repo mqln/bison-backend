@@ -266,7 +266,7 @@ class MigrationService:
         # Weight by inverse distance with steeper decay (keeps population more concentrated)
         kernel = np.zeros((kernel_size, kernel_size), dtype=np.float32)
         mask = (distances > 0) & (distances <= kernel_radius)
-        kernel[mask] = 1.0 / (1.0 + distances[mask])**2.0  # Steeper decay
+        kernel[mask] = 1.0 / (1.0 + distances[mask])**1.5  # Moderate decay: herd cohesion + frontier spread
 
         # Center cell keeps most population (1 - diffusion_rate)
         kernel[kernel_radius, kernel_radius] = 0
