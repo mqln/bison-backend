@@ -210,8 +210,8 @@ class BisonService:
                     growth_factor = -max_growth_rate * (1 - satisfaction / starvation_threshold)
 
                 # Clip growth factor to realistic bounds
-                # Max ~15% growth, max 30% decline per year
-                growth_factor = max(-0.3, min(0.15, growth_factor))
+                # Max ~20% growth (Yukon data), max 30% decline per year
+                growth_factor = max(-0.3, min(0.20, growth_factor))
 
                 # Update population
                 new_pop = pop * (1 + growth_factor)
@@ -256,7 +256,7 @@ class MigrationService:
         """
         # Kernel size based on migration distance (capped for performance)
         cells_per_year = config.annual_migration_km / cell_size_km
-        kernel_radius = min(5, max(2, int(cells_per_year / 4)))  # Smaller kernel
+        kernel_radius = min(15, max(2, int(cells_per_year / 10)))  # Proportional kernel
         kernel_size = 2 * kernel_radius + 1
 
         # Create distance-based kernel
@@ -295,7 +295,7 @@ class MigrationService:
     def create_directional_kernels(config: MigrationConfig, cell_size_km: float) -> dict:
         """Create directional migration kernels for attractiveness-biased movement."""
         cells_per_year = config.annual_migration_km / cell_size_km
-        radius = min(5, max(2, int(cells_per_year / 4)))
+        radius = min(15, max(2, int(cells_per_year / 10)))
 
         kernels = {}
 
@@ -354,7 +354,7 @@ class MigrationService:
 
         # Directional bias based on gradient
         # Shift population toward higher attractiveness using roll operations
-        bias_strength = config.food_preference_weight * config.diffusion_rate * 0.3
+        bias_strength = config.food_preference_weight * config.diffusion_rate * 0.5
 
         # Create shifted versions
         shift_up = np.roll(diffused, -1, axis=0)

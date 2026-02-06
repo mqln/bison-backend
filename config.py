@@ -35,9 +35,9 @@ class BisonConfig:
     # Daily dry matter intake as fraction of body mass (1.5-2.5%)
     daily_intake_rate: float = 0.02
     # Maximum intrinsic growth rate (r_max)
-    # Research shows 7-8% natural max (Yellowstone studies), 17% with supplemental feeding
-    # Using 10% as optimistic but realistic for ideal conditions
-    max_growth_rate: float = 0.10
+    # Yukon reintroduction data shows ~20%/year in good habitat
+    # Yellowstone studies show 7-8% in saturated habitat
+    max_growth_rate: float = 0.20
     # Food satisfaction threshold below which population declines
     # Lowered to be more forgiving - decline only when very hungry
     starvation_threshold: float = 0.2
@@ -57,9 +57,9 @@ class BisonConfig:
 class MigrationConfig:
     """Configuration for bison migration behavior."""
     # Typical annual migration distance in km
-    annual_migration_km: float = 50.0  # Reduced - bison don't spread that fast
+    annual_migration_km: float = 200.0  # Bison seasonal migrations cover 100-300km
     # Base diffusion rate for population spread (fraction that moves per year)
-    diffusion_rate: float = 0.15  # Reduced to prevent over-spreading
+    diffusion_rate: float = 0.35  # Higher rate for realistic frontier spread
     # Weight for food availability in attractiveness calculation
     food_preference_weight: float = 1.0
     # Random movement noise factor
